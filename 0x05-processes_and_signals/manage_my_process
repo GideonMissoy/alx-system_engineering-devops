@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# Indefinitely writes I am alive! to file /tmp/my_process
+# The program should pause for 2 sec in between
+
+while true; do
+	sudo bash -c 'echo "I am alive!" >> /tmp/my_process'
+	sleep
+done
