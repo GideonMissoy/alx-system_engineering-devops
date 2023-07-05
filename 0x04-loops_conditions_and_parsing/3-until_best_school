@@ -1,9 +1,14 @@
 #!/usr/bin/env bash
 # Script displays Best School 10 times.
 
-i = 0
-until [ $i -eq 10 ]
-do
+i=0
+
+until false; do
 	echo "Best School"
-	i=$((i+1))
+	((i++))
+	if [[$i - lt 10]]; then
+		continue
+	else
+		break
+	fi
 done
