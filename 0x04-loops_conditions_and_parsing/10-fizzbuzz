@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# Bash script displays numbers from 1 to 100, fizz when no is a multiple of 3
+# Buzz when no is a mul of 5 and FizzBuzz when no is mul of 3 and 5
+
+for ((p=1;p<=100;p++))
+do
+	if ((p % 3 == 0 && p % 5 == 0))
+    then
+        echo "FizzBuzz"
+    elif ((p % 3 == 0))
+    then
+        echo "Fizz"
+    elif ((p % 5 == 0))
+    then
+        echo "Buzz"
+    else
+        echo "$p"
+	fi
+done
