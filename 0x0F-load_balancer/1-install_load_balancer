@@ -1,11 +1,30 @@
 #!/usr/bin/env bash
-# Install and configure HAproxy on your lb-01 server
-sudo apt-get update
-sudo apt-get -y install software-properties-common
-sudo add-apt-repository -y ppa:vbernat/haproxy-1.8
-sudo apt-get update
-sudo apt-get -y install haproxy=1.8.\*
-options="\n\tbind :80\n\tmode http\n\tuse_backend mybackend\nbackend mybackend\n\tbalance roundrobin\n\tserver 971-web-01 34.236.171.16:80 check\n\tserver 971-web-02 3.236.14.41:80 check"
-sed -i '/errorfile 504/a frontend myconf' /etc/haproxy/haproxy.cfg
-sed -i "s/frontend myconf/&$options/g" /etc/haproxy/haproxy.cfg
-sudo service haproxy restart
+#Install your load balancer
+
+apt-get install --no-install-recommends software-properties-common
+add-apt-repository ppa:vbernat/haproxy-2.0
+apt-get update
+apt-get install haproxy=2.0.\*
+
+# Enable HAProxy to start on boot
+sudo systemctl enable haproxy
+
+# Configure HAProxy for web-01 and web-02 with roundrobin algorithm
+haproxy_cfg="/etc/haproxy/haproxy.cfg"
+
+# Append our configuration
+cat <<EOL | sudo tee -a $haproxy_cfg
+
+frontend http_front
+    bind *:80
+    stats uri /haproxy?stats
+    default_backend webservers
+
+backend webservers
+    balance roundrobin
+    server 200656-web-01 3.89.160.21:80 check
+    server 200656-web-02 54.197.132.144:80 check
+
+EOL
+
+sudo systemctl restart haproxy
