@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+#Double the number of webservers
+
+var=$(hostname)
+nwstrng1="error_page 404 \/custom_404.html;\n location \/redirect_me {\n return 301 \$scheme:\/\/www.google.com;"
+nwstrng2="server {\n\tadd_header X-Served-By $var;"
+
+apt-get update -y
+apt-get install nginx -y
+
+echo "Hello World!" > /usr/share/nginx/html/index.html
+mkdir -p /var/www/html
+echo "Ceci n'est pas une page" > /var/www/html/custom_404.html
+
+server_block_path="/etc/ngnix/sites-avilable/default"
+sudo sed -i -E "s/^[^#]+location \/ \{/$nwstrng1/" server_block_path
+sudo sed -i -E "s/^server \{/$nwstrng2/" server_block_path
+
+sudo service nginx start
