@@ -4,7 +4,12 @@
 # Hello World!
 sudo apt-get update
 sudo apt-get -y install nginx
-sudo ufw allow 'Nginx HTTP'
-echo "Hello World!" | sudo tee /var/www/html/index.html
+sudo bash -c 'echo "server {
+    listen 80;
+    location / {
+        echo \"Hello World!\";
+    }
+}" > /var/www/html/index.html'
 sudo nginx -t
 sudo service nginx start
+sudo ufw allow 'Nginx HTTP'
