@@ -2,9 +2,9 @@
 # Script installs nginx on the webserver that listens on port 80
 # Get request using curl must return a page that contains the string
 # Hello World!
-
-apt-get -y update
-apt-get -y install nginx
-ufw allow 'Nginx HTTP'
-echo 'Hello World!' > /var/www/html/index.html
-service nginx start
+sudo apt-get update
+sudo apt-get -y install nginx
+sudo ufw allow 'Nginx HTTP'
+echo "Hello World!" | sudo tee /var/www/html/index.html
+sudo nginx -t
+sudo service nginx start
