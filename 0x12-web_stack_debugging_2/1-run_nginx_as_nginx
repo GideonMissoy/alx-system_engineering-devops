@@ -6,7 +6,7 @@ sed -i "s/#user www-data/user nginx/" /etc/nginx/nginx.conf
 sed -i "s/80/8080/g" /etc/nginx/sites-available/default
 # give owner permissions to read and write
 chmod 644 /etc/nginx/nginx.conf
-# apache may interfere with nginx so kill  if running
+# apache may interfere with nginx so kill l if running
 pkill apache2
-# start nginx service88 new nginx user
+# start nginx with nginx user
 sudo -u nginx service nginx start
